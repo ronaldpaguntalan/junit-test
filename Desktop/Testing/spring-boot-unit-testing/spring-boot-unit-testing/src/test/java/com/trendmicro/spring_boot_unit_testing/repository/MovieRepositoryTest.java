@@ -2,6 +2,7 @@ package com.trendmicro.spring_boot_unit_testing.repository;
 
 import com.trendmicro.spring_boot_unit_testing.movies.entity.MovieEntity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,15 +25,27 @@ public class MovieRepositoryTest {
     @Autowired
     private MovieRepository movieRepository;
 
-    @Test
-    @DisplayName("It should saved the movie to the database")
-    void saveMovie(){
-        //Arrange - setting up the data
-        MovieEntity avatarMovie = new MovieEntity();
+    private MovieEntity avatarMovie;
+    private MovieEntity titanicMovie;
+
+    //Arrange - we used this Lifecycle method which will be called first when we ran the test
+    @BeforeEach
+    void init(){
+        avatarMovie = new MovieEntity();
         avatarMovie.setName("Avatar");
         avatarMovie.setGenre("Action");
         avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
 
+        titanicMovie = new MovieEntity();
+        titanicMovie.setName("Titanic");
+        titanicMovie.setGenre("Romantic");
+        titanicMovie.setReleaseDate(LocalDate.of(1999, Month.MAY, 6));
+
+    }
+
+    @Test
+    @DisplayName("It should saved the movie to the database")
+    void saveMovie(){
         //Act - calling the method or unit to be tested
         MovieEntity newMovie = movieRepository.save(avatarMovie);
 
@@ -44,16 +57,8 @@ public class MovieRepositoryTest {
     @Test
     @DisplayName("It should return the list with size of 2")
     void getMovies(){
-        MovieEntity avatarMovie = new MovieEntity();
-        avatarMovie.setName("Avatar");
-        avatarMovie.setGenre("Action");
-        avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
         movieRepository.save(avatarMovie);
 
-        MovieEntity titanicMovie = new MovieEntity();
-        titanicMovie.setName("Titanic");
-        titanicMovie.setGenre("Romantic");
-        titanicMovie.setReleaseDate(LocalDate.of(1999, Month.MAY, 6));
         movieRepository.save(titanicMovie);
 
         List<MovieEntity> list = movieRepository.findAll();
@@ -66,10 +71,7 @@ public class MovieRepositoryTest {
     @Test
     @DisplayName("It should return the movie by its id")
     void getByMovieById(){
-        MovieEntity avatarMovie = new MovieEntity();
-        avatarMovie.setName("Avatar");
-        avatarMovie.setGenre("Action");
-        avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
+
         movieRepository.save(avatarMovie);
 
         MovieEntity existingMovie = movieRepository.findById(avatarMovie.getId()).get();
@@ -80,14 +82,9 @@ public class MovieRepositoryTest {
     }
 
     @Test
-    @DisplayName("It should update the movie with genre FANTASYs")
+    @DisplayName("It should update the movie with genre FANTASY")
     void updateMovie(){
-        MovieEntity avatarMovie = new MovieEntity();
-        avatarMovie.setName("Avatar");
-        avatarMovie.setGenre("Action");
-        avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
         movieRepository.save(avatarMovie);
-
         MovieEntity existingMovie = movieRepository.findById(avatarMovie.getId()).get();
 
         existingMovie.setGenre("Fantasy");
@@ -100,17 +97,9 @@ public class MovieRepositoryTest {
     @Test
     @DisplayName("It should delete the movie by its id")
     void deleteMovie(){
-        MovieEntity avatarMovie = new MovieEntity();
-        avatarMovie.setName("Avatar");
-        avatarMovie.setGenre("Action");
-        avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
         movieRepository.save(avatarMovie);
         Long idAvatarMovie = avatarMovie.getId();
 
-        MovieEntity titanicMovie = new MovieEntity();
-        titanicMovie.setName("Titanic");
-        titanicMovie.setGenre("Romantic");
-        titanicMovie.setReleaseDate(LocalDate.of(1999, Month.MAY, 6));
         movieRepository.save(titanicMovie);
 
         movieRepository.delete(avatarMovie);
@@ -124,16 +113,8 @@ public class MovieRepositoryTest {
     @Test
     @DisplayName("It should return list of movies with genre ROMANCE")
     void getMoviesByGenre(){
-        MovieEntity avatarMovie = new MovieEntity();
-        avatarMovie.setName("Avatar");
-        avatarMovie.setGenre("Action");
-        avatarMovie.setReleaseDate(LocalDate.of(2000, Month.APRIL, 22));
         movieRepository.save(avatarMovie);
 
-        MovieEntity titanicMovie = new MovieEntity();
-        titanicMovie.setName("Titanic");
-        titanicMovie.setGenre("Romantic");
-        titanicMovie.setReleaseDate(LocalDate.of(1999, Month.MAY, 6));
         movieRepository.save(titanicMovie);
 
         List<MovieEntity> list = movieRepository.findByGenre("Romantic");
