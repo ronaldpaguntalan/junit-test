@@ -1,7 +1,7 @@
-package com.trendmicro.spring_boot_unit_testing.service;
+package com.trendmicro.spring_boot_unit_testing.movies.service;
 
 import com.trendmicro.spring_boot_unit_testing.movies.entity.MovieEntity;
-import com.trendmicro.spring_boot_unit_testing.repository.MovieRepository;
+import com.trendmicro.spring_boot_unit_testing.movies.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

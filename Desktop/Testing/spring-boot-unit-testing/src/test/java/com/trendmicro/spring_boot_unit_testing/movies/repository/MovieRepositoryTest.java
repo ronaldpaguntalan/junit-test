@@ -1,4 +1,4 @@
-package com.trendmicro.spring_boot_unit_testing.repository;
+package com.trendmicro.spring_boot_unit_testing.movies.repository;
 
 import com.trendmicro.spring_boot_unit_testing.movies.entity.MovieEntity;
 

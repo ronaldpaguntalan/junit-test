@@ -1,8 +1,7 @@
-package com.trendmicro.spring_boot_unit_testing.service;
+package com.trendmicro.spring_boot_unit_testing.movies.service;
 
 import com.trendmicro.spring_boot_unit_testing.movies.entity.MovieEntity;
-import com.trendmicro.spring_boot_unit_testing.repository.MovieRepository;
-import org.junit.jupiter.api.Assertions;
+import com.trendmicro.spring_boot_unit_testing.movies.repository.MovieRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
